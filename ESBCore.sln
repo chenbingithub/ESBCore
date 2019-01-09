@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESBCore", "ESBCore\ESBCore.csproj", "{1EEFFF71-EF49-4D70-AD31-20383B2864AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESBCore", "ESBCore\ESBCore.csproj", "{1EEFFF71-EF49-4D70-AD31-20383B2864AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESBCore.WebApi", "ESBCore.WebApi\ESBCore.WebApi.csproj", "{C2B39280-3F51-4301-A5ED-51B486C19048}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESBCore.WebApi", "ESBCore.WebApi\ESBCore.WebApi.csproj", "{C2B39280-3F51-4301-A5ED-51B486C19048}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESBCore.Service", "ESBCore.Service\ESBCore.Service.csproj", "{8151272D-6C9D-46F0-B48E-6921FA3E0AE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESBCore.Service", "ESBCore.Service\ESBCore.Service.csproj", "{8151272D-6C9D-46F0-B48E-6921FA3E0AE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

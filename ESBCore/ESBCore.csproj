@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp" Version="3.8.3" />
-    <PackageReference Include="Abp.HangFire.AspNetCore" Version="3.8.3" />
-    <PackageReference Include="Abp.MailKit" Version="3.8.3" />
-    <PackageReference Include="Abp.RedisCache" Version="3.8.3" />
+    <PackageReference Include="Abp" Version="3.7.0" />
+    <PackageReference Include="Abp.HangFire.AspNetCore" Version="3.7.0" />
+    <PackageReference Include="Abp.MailKit" Version="3.7.0" />
+    <PackageReference Include="Abp.RedisCache" Version="3.7.0" />
     <PackageReference Include="HangFire.Redis.StackExchange" Version="1.7.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.1.0" />
     <PackageReference Include="MongoDB.Driver.GridFS" Version="2.7.2" />
     <PackageReference Include="sqlSugarCore" Version="4.9.7.4" />
   </ItemGroup>

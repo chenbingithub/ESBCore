@@ -6,10 +6,10 @@ using Abp.AspNetCore;
 using Abp.Castle.Logging.Log4Net;
 using Abp.Hangfire;
 using Castle.Facilities.Logging;
+using ESBCore.Configuration;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,12 +20,13 @@ namespace ESBCore.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+      private IConfiguration Configuration { get; }
+      public Startup(IHostingEnvironment env)
+      {
+        Configuration = env.GetAppConfiguration();
+      }
 
-        public IConfiguration Configuration { get; }
+    
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -47,22 +48,24 @@ namespace ESBCore.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-            }
+          if (env.IsDevelopment())
+          {
+            app.UseDeveloperExceptionPage();
+          }
+          else
+          {
+            app.UseHsts();
+          }
+
+          app.UseHttpsRedirection();
+      app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
+            
             app.UseHangfireServer();
             app.UseHangfireDashboard();
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
                 Authorization = new[] { new AbpHangfireAuthorizationFilter() }
             });
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
