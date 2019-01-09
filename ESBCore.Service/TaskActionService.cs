@@ -14,12 +14,10 @@ namespace ESBCore.Service
     public class TaskActionAppService : ApplicationService, ITaskActionAppService
     {
         private readonly IBackgroundJobManager _backgroundJobManager;
-        private readonly DistributeEmailService _distributeEmailService;
 
-        public TaskActionAppService(IBackgroundJobManager backgroundJobManager,DistributeEmailService distributeEmailService)
+        public TaskActionAppService(IBackgroundJobManager backgroundJobManager)
         {
             _backgroundJobManager = backgroundJobManager;
-            _distributeEmailService = distributeEmailService;
         }
         /// <summary>
         /// 入队

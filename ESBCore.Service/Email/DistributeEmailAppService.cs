@@ -10,10 +10,10 @@ using System.Text;
 
 namespace ESBCore.Service.Email
 {
-    public class DistributeEmailService: BaseService
+    public class DistributeEmailAppService: BaseService
     {
         private ISmtpEmailSender _emailSender;
-        public DistributeEmailService(ISmtpEmailSender smtpEmailSender)
+        public DistributeEmailAppService(ISmtpEmailSender smtpEmailSender)
         {
             _emailSender = smtpEmailSender;
         }
