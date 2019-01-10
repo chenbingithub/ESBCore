@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services;
 using Abp.BackgroundJobs;
+using Abp.Dependency;
 using Abp.Reflection.Extensions;
 using ESBCore.BackgroundJob;
 using ESBCore.Service.Email;
@@ -11,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace ESBCore.Service
 {
-    public class TaskActionAppService : ApplicationService, ITaskActionAppService
+    public class TaskActionService : ApplicationService, ITaskActionService
     {
         private readonly IBackgroundJobManager _backgroundJobManager;
 
-        public TaskActionAppService(IBackgroundJobManager backgroundJobManager)
+        public TaskActionService(IBackgroundJobManager backgroundJobManager)
         {
             _backgroundJobManager = backgroundJobManager;
         }
@@ -34,7 +35,7 @@ namespace ESBCore.Service
         /// <param name="args"></param>
         public void Execute(TaskActionJobArgs args)
         {
-           var service= Assembly.Load(typeof(TaskActionAppService).Assembly.GetName()).CreateInstance(args.targetservice) as BaseService;
+            var service = IocManager.Instance.Resolve<BaseService>(Type.GetType(args.targetservice));
             service.Execute(args);
         }
     }

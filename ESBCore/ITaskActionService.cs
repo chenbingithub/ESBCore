@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ESBCore
 {
-    public interface ITaskActionAppService : IApplicationService
+    public interface ITaskActionService : IApplicationService
     {
         void Execute(TaskActionJobArgs args);
         void Enqueue(TaskActionJobArgs args);

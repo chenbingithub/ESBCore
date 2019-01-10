@@ -8,10 +8,10 @@ namespace ESBCore.BackgroundJob
 {
     public class TaskActionJob : BackgroundJob<TaskActionJobArgs>, ITransientDependency
     {
-        private ITaskActionAppService _taskActionAppService;
-        public TaskActionJob(ITaskActionAppService taskActionAppService)
+        private ITaskActionService _taskActionAppService;
+        public TaskActionJob(ITaskActionService taskActionService)
         {
-            _taskActionAppService = taskActionAppService;
+            _taskActionAppService = taskActionService;
         }
         /// <summary>
         /// 执行

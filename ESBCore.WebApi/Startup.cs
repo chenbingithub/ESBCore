@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Abp.AspNetCore;
 using Abp.Castle.Logging.Log4Net;
+using Abp.Extensions;
 using Abp.Hangfire;
 using Castle.Facilities.Logging;
 using ESBCore.Configuration;
@@ -22,7 +23,8 @@ namespace ESBCore.WebApi
 {
     public class Startup
     {
-      private IConfiguration Configuration { get; }
+        private const string _defaultCorsPolicyName = "localhost";
+        private IConfiguration Configuration { get; }
       public Startup(IHostingEnvironment env)
       {
         Configuration = env.GetAppConfiguration();
@@ -37,7 +39,27 @@ namespace ESBCore.WebApi
                 var connectionString = Configuration.GetConnectionString("hangfire.redis");
                 x.UseRedisStorage(connectionString);
             });
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            // Configure CORS for angular2 UI
+            services.AddCors(
+                options => options.AddPolicy(
+                    _defaultCorsPolicyName,
+                    builder => builder
+                        .WithOrigins(
+                            // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
+                            Configuration["App:CorsOrigins"]
+                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                                .Select(o => o.RemovePostFix("/"))
+                                .ToArray()
+                        )
+                        .AllowAnyHeader()
+                        //.AllowAnyMethod()
+                        .WithMethods(Configuration["App:CorsMethods"]
+                            .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                            .Select(o => o.RemovePostFix("/"))
+                            .ToArray()).AllowCredentials()
+                )
+            );
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
           services.AddSwaggerGen(options =>
           {
             options.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
@@ -75,6 +97,9 @@ namespace ESBCore.WebApi
             {
                 Authorization = new[] { new AbpHangfireAuthorizationFilter() }
             });
+            //设置跨域处理的 代理
+            app.UseCors(_defaultCorsPolicyName); // Enable CORS!
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
               routes.MapRoute(

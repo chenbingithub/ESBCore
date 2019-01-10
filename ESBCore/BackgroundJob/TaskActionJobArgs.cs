@@ -24,7 +24,7 @@ namespace ESBCore.BackgroundJob
         /// <summary>
         /// 返回值索引
         /// </summary>
-        public Guid resultindex { get; set; }
+        public string resultindex { get; set; }
 
         public DateTime time { get; set; }
 
