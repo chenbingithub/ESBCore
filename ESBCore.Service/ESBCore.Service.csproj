@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp" Version="3.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ESBCore\ESBCore.csproj" />
   </ItemGroup>
 

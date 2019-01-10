@@ -36,7 +36,7 @@ namespace ESBCore.WebApi
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddHangfire(x => {
-                var connectionString = Configuration.GetConnectionString("hangfire.redis");
+                var connectionString = Configuration[AppConfigurationConsts.HangfireRedis];
                 x.UseRedisStorage(connectionString);
             });
             // Configure CORS for angular2 UI
