@@ -15,26 +15,23 @@ namespace ESBCore.BackgroundJob
         /// <summary>
         /// 目标服务
         /// </summary>
-        public string targetservice { get; set; }
+        public string Targetservice { get; set; }
         /// <summary>
         /// 值
         /// </summary>
-        public string message { get; set; }
+        public string Message { get; set; }
 
         /// <summary>
         /// 返回值索引
         /// </summary>
-        public string resultindex { get; set; }
+        public string Resultindex { get; set; }
 
-        public DateTime time { get; set; }
+        public DateTime Time { get; set; }
 
-        public Contenttype contenttype { get; set; }
+        public Contenttype Contenttype { get; set; }
 
-        public Actiontype actiontype { get; set; }
-        /// <summary>
-        /// catch累加
-        /// </summary>
-        public int errorcount { get; set; }
+        public Actiontype Actiontype { get; set; }
+        
     }
 
     /// <summary>

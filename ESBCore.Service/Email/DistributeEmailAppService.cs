@@ -10,10 +10,10 @@ using System.Text;
 
 namespace ESBCore.Service.Email
 {
-    public class DistributeEmailAppService: BaseService
+    public class DistributeEmailService: BaseService
     {
         private ISmtpEmailSender _emailSender;
-        public DistributeEmailAppService(ISmtpEmailSender smtpEmailSender)
+        public DistributeEmailService(ISmtpEmailSender smtpEmailSender)
         {
             _emailSender = smtpEmailSender;
         }
@@ -28,7 +28,7 @@ namespace ESBCore.Service.Email
         {
             
             Logger.Info("准备:JsonConvert.DeserializeObject<EmailModel>(action.message)");
-            var message = JsonConvert.DeserializeObject<EmailModel>(action.message);
+            var message = JsonConvert.DeserializeObject<EmailModel>(action.Message);
             Logger.Info("完成:JsonConvert.DeserializeObject<EmailModel>(action.message)");
 
             string[] targets = message.targets;

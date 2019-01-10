@@ -9,8 +9,11 @@ namespace ESBCore.Redis
 {
     public class RedisManager
     {
-        private static IDatabase db= RedisClientFactory.CreateRepository();
-        
+        private IDatabase db;
+        public RedisManager(string connectionStrings)
+        {
+            db = RedisClientFactory.CreateRepository(connectionStrings);
+        }
         
 
         #region String 可以设置过期时间
@@ -22,7 +25,7 @@ namespace ESBCore.Redis
         /// <param name="value">保存的值</param>
         /// <param name="expiry">过期时间</param>
         /// <returns></returns>
-        public static bool SetStringKey(string key, string value, TimeSpan? expiry = default(TimeSpan?))
+        public  bool SetStringKey(string key, string value, TimeSpan? expiry = default(TimeSpan?))
         {
             return db.StringSet(key, value, expiry);
         }
@@ -32,7 +35,7 @@ namespace ESBCore.Redis
         /// </summary>
         /// <param name="arr">key</param>
         /// <returns></returns>
-        public static bool SetStringKey(KeyValuePair<RedisKey, RedisValue>[] arr)
+        public  bool SetStringKey(KeyValuePair<RedisKey, RedisValue>[] arr)
         {
             return db.StringSet(arr);
         }
@@ -44,7 +47,7 @@ namespace ESBCore.Redis
         /// <param name="key"></param>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static bool SetStringKey<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?))
+        public  bool SetStringKey<T>(string key, T obj, TimeSpan? expiry = default(TimeSpan?))
         {
             string json = JsonConvert.SerializeObject(obj);
             return db.StringSet(key, json, expiry);
@@ -56,7 +59,7 @@ namespace ESBCore.Redis
         /// <param name="key">Redis Key</param>
         /// <returns></returns>
 
-        public static RedisValue GetStringKey(string key)
+        public  RedisValue GetStringKey(string key)
         {
             return db.StringGet(key);
         }
@@ -67,7 +70,7 @@ namespace ESBCore.Redis
         /// </summary>
         /// <param name="listKey">Redis Key集合</param>
         /// <returns></returns>
-        public static RedisValue[] GetStringKey(List<RedisKey> listKey)
+        public  RedisValue[] GetStringKey(List<RedisKey> listKey)
         {
             return db.StringGet(listKey.ToArray());
         }
@@ -78,7 +81,7 @@ namespace ESBCore.Redis
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static T GetStringKey<T>(string key)
+        public  T GetStringKey<T>(string key)
         {
             return JsonConvert.DeserializeObject<T>(db.StringGet(key));
         }
@@ -95,7 +98,7 @@ namespace ESBCore.Redis
         /// <param name="key">Redis Key</param>
         /// <param name="list">数据集合</param>
         /// <param name="getModelId"></param>
-        public static void HashSet<T>(string key, List<T> list, Func<T, string> getModelId)
+        public  void HashSet<T>(string key, List<T> list, Func<T, string> getModelId)
         {
             List<HashEntry> listHashEntry = new List<HashEntry>();
             foreach (var item in list)
@@ -113,7 +116,7 @@ namespace ESBCore.Redis
         /// <param name="key">Redis Key</param>
         /// <param name="hasFildValue">RedisValue</param>
         /// <returns></returns>
-        public static T GetHashKey<T>(string key, string hasFildValue)
+        public  T GetHashKey<T>(string key, string hasFildValue)
         {
             if (!string.IsNullOrWhiteSpace(key) && !string.IsNullOrWhiteSpace(hasFildValue))
             {
@@ -133,7 +136,7 @@ namespace ESBCore.Redis
         /// <param name="key">Redis Key</param>
         /// <param name="listhashFields">RedisValue value</param>
         /// <returns></returns>
-        public static List<T> GetHashKey<T>(string key, List<RedisValue> listhashFields)
+        public  List<T> GetHashKey<T>(string key, List<RedisValue> listhashFields)
         {
             List<T> result = new List<T>();
             if (!string.IsNullOrWhiteSpace(key) && listhashFields.Count > 0)
@@ -156,7 +159,7 @@ namespace ESBCore.Redis
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static List<T> GetHashAll<T>(string key)
+        public  List<T> GetHashAll<T>(string key)
         {
             List<T> result = new List<T>();
             RedisValue[] arr = db.HashKeys(key);
@@ -176,7 +179,7 @@ namespace ESBCore.Redis
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static List<T> HashGetAll<T>(string key)
+        public  List<T> HashGetAll<T>(string key)
         {
             List<T> result = new List<T>();
             HashEntry[] arr = db.HashGetAll(key);
@@ -196,7 +199,7 @@ namespace ESBCore.Redis
         /// <param name="key"></param>
         /// <param name="hashField"></param>
         /// <returns></returns>
-        public static bool DeleteHase(RedisKey key, RedisValue hashField)
+        public  bool DeleteHase(RedisKey key, RedisValue hashField)
         {
             return db.HashDelete(key, hashField);
         }
@@ -210,7 +213,7 @@ namespace ESBCore.Redis
         /// </summary>
         /// <param name="key">redis key</param>
         /// <returns>是否删除成功</returns>
-        public static bool KeyDelete(string key)
+        public  bool KeyDelete(string key)
         {
             return db.KeyDelete(key);
         }
@@ -220,7 +223,7 @@ namespace ESBCore.Redis
         /// </summary>
         /// <param name="keys">rediskey</param>
         /// <returns>成功删除的个数</returns>
-        public static long keyDelete(RedisKey[] keys)
+        public  long keyDelete(RedisKey[] keys)
         {
             return db.KeyDelete(keys);
         }
@@ -230,7 +233,7 @@ namespace ESBCore.Redis
         /// </summary>
         /// <param name="key">redis key</param>
         /// <returns></returns>
-        public static bool KeyExists(string key)
+        public  bool KeyExists(string key)
         {
             return db.KeyExists(key);
         }
@@ -241,7 +244,7 @@ namespace ESBCore.Redis
         /// <param name="key">就的redis key</param>
         /// <param name="newKey">新的redis key</param>
         /// <returns></returns>
-        public static bool KeyRename(string key, string newKey)
+        public  bool KeyRename(string key, string newKey)
         {
             return db.KeyRename(key, newKey);
         }
@@ -253,7 +256,7 @@ namespace ESBCore.Redis
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public static void StringAppend(string key, string value)
+        public  void StringAppend(string key, string value)
         {
             ////追加值，返回追加后长度
             long appendlong = db.StringAppend(key, value);

@@ -35,7 +35,7 @@ namespace ESBCore.Service
         /// <param name="args"></param>
         public void Execute(TaskActionJobArgs args)
         {
-            var service = IocManager.Instance.Resolve<BaseService>(Type.GetType(args.targetservice));
+            var service = IocManager.Instance.Resolve<BaseService>(Type.GetType(args.Targetservice));
             service.Execute(args);
         }
     }

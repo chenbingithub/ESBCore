@@ -14,14 +14,14 @@ namespace ESB.Common.KVData
         /// <summary>
         /// 单例模式获取redis连接实例
         /// </summary>
-        public static IDatabase CreateRepository()
+        public static IDatabase CreateRepository(string connectionStrings)
         {
             if (_instance == null)
             {
                 lock (_lock)
                 {
                     if (_instance == null)
-                        _instance = ConnectionMultiplexer.Connect(RedisConfig.ConnectionStrings).GetDatabase();
+                        _instance = ConnectionMultiplexer.Connect(connectionStrings).GetDatabase();
                 }
             }
             return _instance;

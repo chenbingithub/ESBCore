@@ -26,7 +26,7 @@ namespace ESBCore.WebApi
       public override void PreInitialize()
       {
           Configuration.Modules.AbpAspNetCore().CreateControllersForAppServices(
-              typeof(ESBCoreServiceModule).GetAssembly()
+              typeof(ESBCoreServiceModule).GetAssembly(),"App"
             );
     }
 

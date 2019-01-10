@@ -11,7 +11,7 @@ namespace ESB.Common.Mongo
     {
         private readonly static object _lock = new object();
         private static  IMongoClient _client;
-        public static IMongoDatabase CreateRepository()
+        public static IMongoDatabase CreateRepository(string connectionStrings)
         {
             if(_client==null)
             {
@@ -19,7 +19,7 @@ namespace ESB.Common.Mongo
                 {
                     if (_client == null)
                     {
-                        _client = new MongoClient(MongoConfig.ConnectionStrings);
+                        _client = new MongoClient(connectionStrings);
                     }
                 }
             }
