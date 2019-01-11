@@ -40,7 +40,7 @@ namespace ESBCore.Service.Email
             {
                 
                 MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress("pub@chinergy.com.cn", "pub@chinergy.com.cn");
+               // mailMessage.From = new MailAddress("pub@chinergy.com.cn", "pub@chinergy.com.cn");
 
                 if (targets != null)
                 {
