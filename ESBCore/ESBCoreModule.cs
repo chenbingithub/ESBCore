@@ -1,10 +1,12 @@
-﻿using Abp.Hangfire;
+﻿using Abp.Configuration.Startup;
+using Abp.Hangfire;
 using Abp.Hangfire.Configuration;
 using Abp.MailKit;
 using Abp.Modules;
 using Abp.Net.Mail.Smtp;
 using Abp.Reflection.Extensions;
 using Abp.Runtime.Caching.Redis;
+using ESBCore.Common;
 using ESBCore.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +14,7 @@ using System;
 
 namespace ESBCore
 {
-    [DependsOn(typeof(AbpHangfireAspNetCoreModule), typeof(AbpMailKitModule), typeof(AbpRedisCacheModule))]
+    [DependsOn(typeof(AbpHangfireAspNetCoreModule), typeof(AbpMailKitModule), typeof(AbpRedisCacheModule),typeof(ESBCoreCommonModule))]
     public class ESBCoreModule : AbpModule
     {
         private readonly IConfigurationRoot _appConfiguration;
@@ -22,7 +24,7 @@ namespace ESBCore
         }
         public override void PreInitialize()
         {
-            IocManager.Register<ISmtpEmailSenderConfiguration, MySmtpEmailSenderConfiguration>();
+            
             //使用hangfire
             Configuration.BackgroundJobs.UseHangfire();
 
@@ -42,6 +44,7 @@ namespace ESBCore
                 option.ConnectionString = _appConfiguration["Abp:RedisCache:ConnectionStrings"];
                 option.DatabaseId = int.Parse(_appConfiguration["Abp:RedisCache:DatabaseId"]);
             });
+            AppConfigurationConsts.EmailConfiguration();
         }
 
         public override void Initialize()

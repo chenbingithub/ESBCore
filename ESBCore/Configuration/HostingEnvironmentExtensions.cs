@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace ESBCore.Configuration
 {
     public static class HostingEnvironmentExtensions

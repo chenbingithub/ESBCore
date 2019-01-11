@@ -1,6 +1,6 @@
 ﻿namespace Abp.MongoDb.Configuration
 {
-    internal class AbpMongoDbConfiguration : IAbpMongoDbConfiguration
+    public class AbpMongoDbConfiguration : IAbpMongoDbConfiguration
     {
         public string ConnectionString { get; set; }
 
