@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ESBCore.Domain;
 
-namespace ESB.Core.Connections.DB
+namespace ESBCore.Domain.Entities
 {
-    public  class Conn_email
-    {
+    public  class EmailConfiguration: EntityBase
+  {
         public string Key { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }

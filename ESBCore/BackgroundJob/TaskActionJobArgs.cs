@@ -8,10 +8,7 @@ namespace ESBCore.BackgroundJob
     public class TaskActionJobArgs
     {
 
-        /// <summary>
-        /// 请求来源地址
-        /// </summary>
-        //public string source { get; set; }
+        
         /// <summary>
         /// 目标服务
         /// </summary>
@@ -39,14 +36,23 @@ namespace ESBCore.BackgroundJob
     /// </summary>
     public enum Actiontype
     {
-        message,    //消息，有去无回
-        reqrep      //请求应答，有去有回
-    }
+    /// <summary>
+    /// 消息，有去无回
+    /// </summary>
+    Message,    
+                /// <summary>
+                /// 请求应答，有去有回
+                /// </summary>
+    Reqrep      
+  }
     /// <summary>
     /// 传递消息的格式
     /// </summary>
     public enum Contenttype
     {
-        json
+    /// <summary>
+    /// Json
+    /// </summary>
+        Json
     }
 }

@@ -1,35 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ESB.Common.FTP;
-using ESB.Common.Http;
-using ESB.Core.Connections.Models;
-using ESB.Core.Connections.DB;
-using System.Net.Mail;
-using ESB.Common.Redis;
-using Abp.Redis;
-using StackExchange.Redis;
-using ESBCore.Configuration;
-using Abp.SqlSugar.Configuration;
 using Abp.Email.Configuration;
 using Abp.MongoDb.Configuration;
+using Abp.Redis;
 using Abp.Redis.Configuration;
+using Abp.SqlSugar.Configuration;
+using ESB.Common.FTP;
+using ESB.Common.Http;
+using ESB.Common.Redis;
+using ESBCore.Configuration;
+using ESBCore.Domain.Entities;
+using StackExchange.Redis;
 
-namespace ESB.Core.Connections.Imp
+namespace ESBCore.Connections.Imp
 {
-    public class Connection : IConnection
+    public class Connection 
     {
         private IDatabase kvclient;
         public Connection()
         {
             kvclient = RedisClientFactory.CreateRepository(AppConfigurationConsts.RedisConnectionString());
         }
-        public void GetEmailConn(Models.Connection con)
+        public void GetEmailConn(Domain.Entities.Connection con)
         {
-            var email = kvclient.GetStringKey<Conn_email>("Conn:email:" + con.Name);
+            var email = kvclient.GetStringKey<EmailConfiguration>("Conn:email:" + con.Name);
             if (email == null)
             {
                 throw new Exception("未找到对应连接");
@@ -41,9 +34,9 @@ namespace ESB.Core.Connections.Imp
                 Password = email.Password,
             });
         }
-        public void GetMongoConn(Models.Connection con)
+        public void GetMongoConn(Domain.Entities.Connection con)
         {
-            var mongo = kvclient.GetStringKey<Conn_mongo>("Conn:Mongo:" + con.Name);
+            var mongo = kvclient.GetStringKey<MongoConfiguration>("Conn:Mongo:" + con.Name);
             if (mongo == null)
             {
                 throw new Exception("未找到对应连接");
@@ -54,9 +47,9 @@ namespace ESB.Core.Connections.Imp
                 DatatabaseName = mongo.DatatabaseName,
             });
         }
-        public void GetRedisConn(Models.Connection con)
+        public void GetRedisConn(Domain.Entities.Connection con)
         {
-            var redis = kvclient.GetStringKey<Conn_redis>("Conn:redis:" + con.Name);
+            var redis = kvclient.GetStringKey<RedisConfiguration>("Conn:redis:" + con.Name);
             if (redis == null)
             {
                 throw new Exception("未找到对应连接");
@@ -67,30 +60,30 @@ namespace ESB.Core.Connections.Imp
                 DatabaseId=redis.DatabaseId
             });
         }
-        public FtpOperator Getftpconn(Models.Connection con)
+        public FtpOperator Getftpconn(Domain.Entities.Connection con)
         {
-            var ftp = kvclient.GetStringKey<Conn_ftp>("Conn:ftp:" + con.Name);
+            var ftp = kvclient.GetStringKey<FtpConfiguration>("Conn:ftp:" + con.Name);
             if (ftp == null)
             {
                 throw new Exception("未找到对应连接");
             }
-            return new FtpOperator(new Uri(ftp.host), ftp.username, ftp.passwd);
+            return new FtpOperator(new Uri(ftp.Host), ftp.Username, ftp.Password);
         }
 
-        public IHttpConnection Gethttpconn(Models.Connection con)
+        public IHttpConnection Gethttpconn(Domain.Entities.Connection con)
         {
-            var http = kvclient.GetStringKey<Conn_http>("Conn:http:" + con.Name);
+            var http = kvclient.GetStringKey<HttpConfiguration>("Conn:http:" + con.Name);
             if (http == null)
             {
                 throw new Exception("未找到对应连接");
             }
 
-            return Common.Http.SessionFactory.CreateHttpConnection(http.host);
+            return ESB.Common.Http.SessionFactory.CreateHttpConnection(http.Host);
         }
 
-        public void Getsqlconn(Models.Connection con)
+        public void Getsqlconn(Domain.Entities.Connection con)
         {
-            var sql = kvclient.GetStringKey<Conn_sql>("Conn:sql:" + con.Name);
+            var sql = kvclient.GetStringKey<SqlConfiguration>("Conn:sql:" + con.Name);
             if (sql == null)
             {
                 throw new Exception("未找到对应连接");

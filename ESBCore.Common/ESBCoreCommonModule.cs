@@ -6,6 +6,7 @@ using System.Reflection;
 using Abp.MongoDb.Configuration;
 using Abp.Email.Configuration;
 using Abp.Net.Mail.Smtp;
+using Abp.SqlSugar.Repositories;
 
 namespace ESBCore.Common
 {
@@ -21,7 +22,8 @@ namespace ESBCore.Common
             IocManager.Register<IAbpMongoDbConfiguration, AbpMongoDbConfiguration>();
             IocManager.Register<IAbpRedisConfiguration, AbpRedisConfiguration>();
             IocManager.Register<IAbpSqlSugarConfiguration, AbpSqlSugarConfiguration>();
-        }
+         
+    }
 
         public override void Initialize()
         {

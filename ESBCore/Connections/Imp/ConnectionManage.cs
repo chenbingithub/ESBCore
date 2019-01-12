@@ -1,69 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Abp.Redis;
+﻿using Abp.Redis;
 using ESB.Common.Redis;
-using ESB.Core.Connections.DB;
 using ESBCore.Configuration;
+using ESBCore.Domain.Entities;
 using StackExchange.Redis;
 
-namespace ESB.Core.Connections.Imp
+namespace ESBCore.Connections.Imp
 {
     public class ConnectionManage : IConnectionManage
     {
-        private IDatabase kvclient;
+        private IDatabase _kvclient;
         public ConnectionManage()
         {
-            kvclient = RedisClientFactory.CreateRepository(AppConfigurationConsts.RedisConnectionString());
+            _kvclient = RedisClientFactory.CreateRepository(AppConfigurationConsts.RedisConnectionString());
         }
-        public Conn_email Getemailconn(string con)
+        public EmailConfiguration Getemailconn(string con)
         {
             
-            return kvclient.GetStringKey<Conn_email>("Conn:email:" + con);
-        }
-
-        public Conn_ftp Getftpconn(string con)
-        {
-            
-            return kvclient.GetStringKey<Conn_ftp>("Conn:ftp:" + con);
+            return _kvclient.GetStringKey<EmailConfiguration>("Conn:email:" + con);
         }
 
-        public Conn_http Gethttpconn(string con)
+        public FtpConfiguration Getftpconn(string con)
         {
             
-            return kvclient.GetStringKey<Conn_http>("Conn:http:" + con);
+            return _kvclient.GetStringKey<FtpConfiguration>("Conn:ftp:" + con);
         }
 
-        public Conn_sql Getsqlconn(string con)
+        public HttpConfiguration Gethttpconn(string con)
         {
             
-            return kvclient.GetStringKey<Conn_sql>("Conn:sql:" + con);
+            return _kvclient.GetStringKey<HttpConfiguration>("Conn:http:" + con);
         }
 
-        public bool Setemailconn(Conn_email con)
+        public SqlConfiguration Getsqlconn(string con)
         {
             
-            return kvclient.SetStringKey<Conn_email>("Conn:email:" + con.Key, con);
+            return _kvclient.GetStringKey<SqlConfiguration>("Conn:sql:" + con);
         }
 
-        public bool Setftpconn(Conn_ftp con)
+        public bool Setemailconn(EmailConfiguration con)
         {
             
-            return kvclient.SetStringKey<Conn_ftp>("Conn:ftp:" + con.key, con);
+            return _kvclient.SetStringKey<EmailConfiguration>("Conn:email:" + con.Key, con);
         }
 
-        public bool Sethttpconn(Conn_http con)
+        public bool Setftpconn(FtpConfiguration con)
         {
             
-            return kvclient.SetStringKey<Conn_http>("Conn:http:" + con.key, con);
+            return _kvclient.SetStringKey<FtpConfiguration>("Conn:ftp:" + con.Key, con);
         }
 
-        public bool Setsqlconn(Conn_sql con)
+        public bool Sethttpconn(HttpConfiguration con)
         {
             
-            return kvclient.SetStringKey<Conn_sql>("Conn:sql:" + con.Key, con);
+            return _kvclient.SetStringKey<HttpConfiguration>("Conn:http:" + con.Key, con);
+        }
+
+        public bool Setsqlconn(SqlConfiguration con)
+        {
+            
+            return _kvclient.SetStringKey<SqlConfiguration>("Conn:sql:" + con.Key, con);
         }
     }
 }
